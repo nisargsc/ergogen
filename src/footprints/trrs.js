@@ -47,6 +47,15 @@ module.exports = {
       (fp_line (start 0.75 12.1) (end -5.35 12.1) (layer Dwgs.User) (width 0.15))
       (fp_line (start 0.75 0) (end -5.35 0) (layer Dwgs.User) (width 0.15))
 
+      ${''/* component outline */}
+      (fp_line (start 0.5 -2) (end -5.1 -2) (layer ${silk_layer}) (width 0.15))
+      (fp_line (start -5.1 0) (end -5.1 -2) (layer ${silk_layer}) (width 0.15))
+      (fp_line (start 0.5 0) (end 0.5 -2) (layer ${silk_layer}) (width 0.15))
+      (fp_line (start -5.35 0) (end -5.35 12.1) (layer ${silk_layer}) (width 0.15))
+      (fp_line (start 0.75 0) (end 0.75 12.1) (layer ${silk_layer}) (width 0.15))
+      (fp_line (start 0.75 12.1) (end -5.35 12.1) (layer ${silk_layer}) (width 0.15))
+      (fp_line (start 0.75 0) (end -5.35 0) (layer ${silk_layer}) (width 0.15))
+
       ${''/* stabilizers */}
       (pad "" np_thru_hole circle (at -2.3 8.6) (size 1.2 1.2) (drill 1.2) (layers *.Cu *.Mask))
       (pad "" np_thru_hole circle (at -2.3 1.6) (size 1.2 1.2) (drill 1.2) (layers *.Cu *.Mask))
