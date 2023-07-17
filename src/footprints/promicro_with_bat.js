@@ -1,8 +1,8 @@
 // Arduino ProMicro atmega32u4au
 // Params
 //  orientation: default is down
-//    if down, power led will face the pcb, silk screen in front
-//    if up, power led will face away from pcb, silk screen in back
+//    if down, power led will face the pcb
+//    if up, power led will face away from pcb
 
 module.exports = {
   params: {
@@ -122,7 +122,7 @@ module.exports = {
     }
 
     function batteryPins(p, def_neg, def_pos, silk_layer, font_effect) {
-      if(p.param.batteryPins) {
+      if(p.batteryPins) {
         return `
           (fp_text user "B+" (at -16.51 ${def_pos}4.8 ${p.rot + 90}) (layer ${silk_layer}) (effects (font (size 0.8 0.8) (thickness 0.15)) ${font_effect}))
           (fp_text user "B-" (at -16.51 ${def_neg}4.8 ${p.rot + 90}) (layer ${silk_layer}) (effects (font (size 0.8 0.8) (thickness 0.15)) ${font_effect}))
@@ -134,7 +134,7 @@ module.exports = {
       }
     }
 
-    if(p.param.orientation == 'up') {
+    if(p.orientation == 'down') {
       return `
         ${standard('F.SilkS')}
         ${pins('-', '', 'F.SilkS', '')}

@@ -1,0 +1,242 @@
+units:
+  kx: U
+  ky: U
+  px: 4
+  py: 4
+
+points:
+  zones:
+    matrix:
+      # Fix placement on KiCAD sheet.
+      anchor:
+        shift: [100, -100]
+      columns:
+        outer:
+          key:
+            column_net: P21
+        pinky:
+          key:
+            stagger: 0.25ky
+            column_net: P20
+        ring:
+          key:
+            stagger: 0.66ky
+            column_net: P19
+        middle:
+          key:
+            stagger: 0.25ky
+            column_net: P18
+        index:
+          key:
+            stagger: -0.25ky
+            column_net: P15
+        inner:
+          key:
+            stagger: -0.15ky
+            column_net: P14
+      rows:
+        bottom:
+          row_net: P09
+          padding: ky
+        home:
+          row_net: P08
+          padding: ky
+        top:
+          row_net: P07
+          padding: ky
+
+    thumb:
+      anchor:
+        ref: matrix_index_bottom
+        shift: [-0.5kx, -1.5ky]
+        rotate: 10
+      columns:
+        key0:
+          key:
+            name: thumb_key0 
+            column_net: P19
+        key1:
+          key:
+            spread: ky
+            splay: -20
+            origin: [-0.5kx, -0.5ky]
+            name: thumb_key1
+            column_net: P18
+        home:
+          key:
+            spread: ky
+            splay: -20
+            origin: [-0.5kx, -0.5ky]
+            name: thumb_home
+            column_net: P15
+        key2:
+          key:
+            spread: ky
+            splay: -20
+            origin: [-0.5kx, -0.5ky]
+            name: thumb_key2
+            column_net: P14
+      rows:
+        cluster:
+          row_net: P10
+
+outlines:
+  raw:
+    - what: rectangle
+      where: true
+      size: [px, py]
+  keys:
+    - what: rectangle
+      where: true
+      size: [kx-1,ky-1]
+        
+  board:
+    - what: polygon
+      operation: stack
+      fillet: 1
+      points:
+        - ref: matrix_outer_top
+          shift: [-0.6kx,0.6ky]
+        - ref: matrix_outer_bottom
+          shift: [-0.6kx,-0.6ky]
+
+        - ref: matrix_pinky_bottom
+          shift: [1.5kx,-0.6ky -0.25ky]
+        - ref: thumb_key0
+          shift: [-0.5kx,-0.6ky]
+        - ref: thumb_key1
+          shift: [-0.5kx,-0.6ky]
+        - ref: thumb_home
+          shift: [-0.5kx,-0.6ky]
+        - ref: thumb_home
+          shift: [0.5kx,-0.6ky]
+        - ref: thumb_key2
+          shift: [0.6kx,-0.6ky]
+
+        - ref: thumb_key2
+          shift: [0.6kx,0.6ky]
+        - ref: thumb_key2
+          shift: [-0.1kx,0.6ky]
+        - ref: matrix_inner_top
+          shift: [2kx,0.6ky]
+
+        - ref: matrix_inner_top
+          shift: [-0.3kx,0.6ky]
+        - ref: matrix_index_top
+          shift: [0.7kx,0.6ky]
+          
+        - ref: matrix_index_top
+          shift: [-0.3kx,0.6ky]
+        - ref: matrix_middle_top
+          shift: [0.7kx,0.6ky]
+          
+        - ref: matrix_middle_top
+          shift: [-0.7kx,0.6ky]
+        - ref: matrix_ring_top
+          shift: [0.3kx,0.6ky]
+
+        - ref: matrix_ring_top
+          shift: [-0.7kx,0.6ky]
+        - ref: matrix_pinky_top
+          shift: [0.3kx,0.6ky]
+
+        - ref: matrix_pinky_top
+          shift: [-0.7kx,0.6ky]
+        - ref: matrix_outer_top
+          shift: [0.3kx,0.6ky]
+        
+        - ref: matrix_outer_top
+          shift: [-0.6kx,0.6ky]
+
+  plate:
+    - name: board
+    - operation: subtract
+      name: keys
+
+pcbs:
+  nkb44:
+    outlines:
+      main:
+        outline: board
+    footprints:
+      mx_hotswap:
+        what: mx
+        where: true
+        params:
+          keycaps: true
+          reverse: true
+          hotswap: true
+          from: "{{column_net}}"
+          to: "{{colrow}}"
+      diode:
+        what: diode
+        where: true
+        params:
+          from: "{{colrow}}"
+          to: "{{row_net}}"
+        adjust:
+          shift: [0, -5]
+      promicro_l:
+        what: promicroWithBat
+        params:
+          batteryPins: true
+          orientation: 'up'
+        where:
+          ref: matrix_inner_home
+          shift: [kx+px, 0.4ky]
+          rotate: -90
+      promicro_r:
+        what: promicroWithBat
+        params:
+          batteryPins: true
+          orientation: 'down'
+        where:
+          ref: matrix_inner_home
+          shift: [kx+2px, 0.4ky-1]
+          rotate: -90
+      trrs:
+        what: trrs
+        params:
+          reverse: true
+          symmetric: false
+          A: ""
+          B: VCC
+          C: GND
+          D: P0
+        where:
+          ref: matrix_inner_bottom
+          shift: [2kx,-0.8ky-2]
+          rotate: -90
+      # slider_l:
+      #   what: slider
+      #   where:
+      #     ref:
+      #       - matrix_inner_bottom
+      #     shift: [kx, 0]
+      #     rotate: -90
+      #   params:
+      #     side: F
+      #     from: RAW
+      #     left: Bplus
+      #     right: ''
+      # slider_r:
+      #   what: slider
+      #   where:
+      #     ref:
+      #       - matrix_inner_bottom
+      #     shift: [kx, 0]
+      #     rotate: -90
+      #   params:
+      #     side: B
+      #     from: RAW
+      #     left: ''
+      #     right: Bplus
+  plate:
+    outlines:
+      main:
+        outline: plate
+  bottom:
+    outlines:
+      main:
+        outline: board
+

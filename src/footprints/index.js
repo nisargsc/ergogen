@@ -15,7 +15,7 @@ module.exports = {
   pcm12: require("./pcm12"),
   promicro: require("./promicro"),
   promicro_pretty: require("./promicro_pretty"),
-  promicroWithBat: require("./promicroWithBat"),
+  promicro_with_bat: require("./promicro_with_bat"),
   rgb: require("./rgb"),
   rotary: require("./rotary"),
   scrollwheel: require("./scrollwheel"),

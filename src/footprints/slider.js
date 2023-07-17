@@ -8,8 +8,8 @@ module.exports = {
     },
     body: p => {
 
-        const left = p.param.side == 'F' ? '-' : ''
-        const right = p.param.side == 'F' ? '' : '-'
+        const left = p.side == 'F' ? '-' : ''
+        const right = p.side == 'F' ? '' : '-'
 
         return `
         
